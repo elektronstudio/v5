@@ -106,6 +106,13 @@ code {
   opacity: 0;
 }
 
+.Page.SingleProduction {
+  display: flex;
+  flex-direction: column;
+  padding: var(--p-4) 0;
+  gap: var(--p-4);
+}
+
 /* TODO: Figure out how to handle input styles */
 /* input {
   margin-bottom: var(--p-3);

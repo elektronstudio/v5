@@ -1,11 +1,11 @@
 <script setup lang="ts">
 type Props = {
-  layout?: "columns1" | "columns2" | "columns3" | "columns4";
+  layout?: "columns1" | "columns1-5" | "columns2" | "columns3" | "columns4";
   title?: string;
   content?: string;
 };
 
-const { layout, title, content } = defineProps<Props>();
+const { layout = "columns1", title, content } = defineProps<Props>();
 </script>
 <template>
   <!-- TODO: minimum aspect ratio is probably needed -->

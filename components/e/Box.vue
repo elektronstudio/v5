@@ -11,7 +11,7 @@ type Props = {
     | "1 / 2"
     | "2 / 1"
     | "auto";
-  layout?: "columns1" | "columns2" | "columns3" | "columns4";
+  layout?: "columns1" | "columns1-5" | "columns2" | "columns3" | "columns4";
   // TODO: Rethink how to pass colors to components
   color?: "accent" | "gray";
 };
@@ -25,7 +25,7 @@ const { el = "div", color, ratio = "auto", layout } = defineProps<Props>();
   </component>
 </template>
 
-<style scoped>
+<style>
 .EBox {
   padding: var(--p-4);
   border: 1px solid var(--gray-500);
@@ -51,6 +51,7 @@ const { el = "div", color, ratio = "auto", layout } = defineProps<Props>();
 
 /* TODO: Add breakpoints system */
 @media only screen and (min-width: 600px) {
+  .EBox.columns1-5,
   .EBox.columns3,
   .EBox.columns4 {
     grid-column: span 2;
@@ -58,20 +59,26 @@ const { el = "div", color, ratio = "auto", layout } = defineProps<Props>();
 }
 /* TODO: Add breakpoints system */
 @media only screen and (min-width: 1240px) {
+  .EBox.columns1 {
+    grid-column: span 3;
+  }
+  .EBox.columns1-5 {
+    grid-column: span 4;
+  }
   .EBox.columns2 {
-    grid-column: span 2;
+    grid-column: span 6;
   }
   .EBox.columns3 {
     display: grid;
     grid-template-columns: 2fr 4fr;
     grid-gap: var(--gap-5);
-    grid-column: span 3;
+    grid-column: span 8;
   }
   .EBox.columns4 {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: var(--gap-5);
-    grid-column: span 4;
+    grid-column: span 12;
   }
 }
 </style>

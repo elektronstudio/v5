@@ -26,7 +26,7 @@ const { lang } = useLang();
 <template>
   <ErrorCard v-if="error" />
   <article v-else class="Page SingleProduction">
-    <header>
+    <header class="eventHeader">
       <div class="title">
         <!-- <NuxtLink to="/projects">
           <EButton size="xs" el="a" color="transparent">
@@ -49,15 +49,15 @@ const { lang } = useLang();
     </header>
 
     <ImageSlider v-if="project.images" :images="project.images" />
-    <main>
-      <EBox class="MainContent">
+    <main class="mainContent">
+      <EBox class="eventContent">
         <EDetailsList
           v-if="project.detailss[lang]"
           :details="parseDetails(project.detailss[lang])"
         />
         <EContent el="div" :content="project.descriptions[lang]" />
       </EBox>
-      <EBox v-if="project.events" class="SideContent" el="aside">
+      <EBox v-if="project.events" class="sideContent" el="aside">
         <template v-if="project.events">
           <ETitle el="h3" size="lg">
             {{ ["Events", "Üritused"][lang] }}
@@ -92,62 +92,66 @@ const { lang } = useLang();
       </EBox>
     </main>
   </article>
+  <BackgroundImage
+    v-if="project.backgroundImage"
+    :image="project.backgroundImage"
+  />
 </template>
 
 <style scoped>
-.Page.SingleProduction header,
-.Page.SingleProduction main {
+.eventHeader,
+.mainContent {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: var(--gap-5);
-  padding: var(--p-4);
+  padding: 0 var(--p-4);
   color: var(--gray-300);
 }
 
-.Page.SingleProduction header {
+.eventHeader {
   grid-template-areas:
     "title"
     "subtitle"
     "description";
 }
-.Page.SingleProduction main {
+.mainContent {
   align-content: start;
   grid-template-areas:
     "main"
     "side";
 }
 
-.Page.SingleProduction header .title {
+.eventHeader .title {
   grid-area: title;
 }
-.Page.SingleProduction header .title h2 {
+.eventHeader .title h2 {
   margin-bottom: var(--m-3);
 }
 
-.Page.SingleProduction header h4 {
+.eventHeader h4 {
   grid-area: subtitle;
   align-self: end;
 }
 
-.Page.SingleProduction header .Description {
+.eventHeader .Description {
   grid-area: description;
 }
 
-.MainContent {
+.eventContent {
   align-self: start;
   grid-area: main;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: var(--gap-5);
 }
-.SideContent {
+.sideContent {
   grid-area: side;
   align-self: start;
 }
-.SideContent h3 {
+.sideContent h3 {
   margin-bottom: var(--m-6);
 }
-.SideContent h3:not(:first-child) {
+.sideContent h3:not(:first-child) {
   margin-top: var(--m-8);
 }
 
@@ -164,41 +168,41 @@ const { lang } = useLang();
   }
 }
 @media only screen and (min-width: 600px) {
-  .Page.SingleProduction header,
-  .Page.SingleProduction main {
+  .eventHeader,
+  .mainContent {
     grid-template-columns: repeat(4, 1fr);
   }
-  .Page.SingleProduction header {
+  .eventHeader {
     grid-template-areas:
       "title description description description"
       "subtitle description description description";
   }
 
-  .Page.SingleProduction main {
+  .mainContent {
     grid-template-areas: "main main main main" "side side side side";
   }
-  .MainContent {
+  .eventContent {
     grid-template-areas: "details content";
     grid-template-columns: 2fr 3fr;
   }
-  .MainContent .EDetailsList {
+  .eventContent .EDetailsList {
     grid-area: details;
   }
-  .MainContent .EContent {
+  .eventContent .EContent {
     grid-area: content;
   }
 }
 @media only screen and (min-width: 1240px) {
-  .Page.SingleProduction header,
-  .Page.SingleProduction main {
+  .eventHeader,
+  .mainContent {
     grid-template-columns: repeat(8, 1fr);
   }
-  .Page.SingleProduction header {
+  .eventHeader {
     grid-template-areas:
       "title title description description description description . ."
       "subtitle subtitle description description description description . .";
   }
-  .Page.SingleProduction main {
+  .mainContent {
     grid-template-areas: "main main main main main side side side";
   }
 }

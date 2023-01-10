@@ -33,7 +33,11 @@ const { data: upcomingEvents, error } = await useEvents({
         v-else-if="!upcomingEvents || upcomingEvents?.length === 0"
         size="lg"
       >
-        Currently no upcoming events
+        {{
+          ["Currently no upcoming events", "Hetkel ei ole sündmusi tulemas"][
+            lang
+          ]
+        }}
       </ETitle>
     </section>
   </ScheduleWrapper>

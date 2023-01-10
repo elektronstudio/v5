@@ -7,15 +7,16 @@ type Card = {
     | "content.related-page"
     | "content.person-card"
     | "content.image-card"
-    | "content.external-link";
+    | "content.external-link"
+    | "content.media-card";
   title: string;
-  titles: [string, string];
   content: string;
-  contents: [string, string];
+  description?: string;
   name?: string;
   url?: string;
-  layout?: "columns1" | "columns2" | "columns3" | "columns4";
+  layout?: "columns1" | "columns1-5" | "columns2" | "columns3" | "columns4";
   image?: any;
+  media?: any;
   page?: {
     data: {
       attributes: {
@@ -68,6 +69,14 @@ const { cards } = defineProps<Props>();
       <EImageCard
         v-else-if="item.__component === 'content.image-card'"
         :media="item.image"
+        :layout="item.layout"
+      />
+      <EMediaCard
+        v-else-if="item.__component === 'content.media-card'"
+        :layout="item.layout"
+        :title="item.title"
+        :description="item.description"
+        :media="item.media"
       />
     </template>
   </section>
@@ -78,7 +87,7 @@ const { cards } = defineProps<Props>();
   display: flex;
   flex-direction: column;
   gap: var(--gap-5);
-  padding: var(--p-4);
+  padding: 0 var(--p-4);
   margin-bottom: var(--m-12);
 }
 .ContentBlocks > h2 {
@@ -98,7 +107,10 @@ const { cards } = defineProps<Props>();
 /* TODO: Add breakpoints system */
 @media only screen and (min-width: 1240px) {
   .ContentBlocks {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .ContentBlocks .ECard {
+    grid-column: span 3;
   }
 }
 </style>

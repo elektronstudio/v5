@@ -32,6 +32,7 @@ export type Event = {
   ticketLinks: any[];
   videostreams?: Videostream[];
   live_content: string;
+  images: MediaItem[];
 };
 
 type Videostream = {

@@ -39,6 +39,11 @@ export const useEventBySlug = (
           "thumbnail",
           "projects",
           "projects.thumbnail",
+          "backgroundImage",
+          "cards.image",
+          "cards.media",
+          "localizations.cards.image",
+          "localizations.cards.media",
         ],
       },
       params,
@@ -114,6 +119,8 @@ export const useProjectBySlug = (
           "thumbnail",
           "events",
           "events.thumbnail",
+          "backgroundImage",
+          "video",
         ],
       },
       params,
@@ -123,7 +130,6 @@ export const useProjectBySlug = (
 };
 
 // Pages
-
 export const useFrontPage = (params: Strapi4RequestParams = {}) => {
   return useFind(
     "frontpage",
@@ -160,7 +166,9 @@ export const useAboutPage = (params: Strapi4RequestParams = {}) => {
           "cards",
           "localizations.cards",
           "cards.image",
+          "cards.media",
           "localizations.cards.image",
+          "localizations.cards.media",
         ],
       },
       params,
@@ -208,6 +216,43 @@ export const usePodcastPage = (params: Strapi4RequestParams = {}) => {
 
 export const useMessagesHistory = (params: Strapi4RequestParams = {}) => {
   return useFind("messages", merge({ sort: ["datetime:asc"] }, params));
+};
+
+// Blog
+
+export const useBlogPosts = (params: Strapi4RequestParams = {}) => {
+  return useFind(
+    "blogs",
+    merge(
+      {
+        populate: ["localizations", "thumbnail"],
+      },
+      params,
+    ),
+    (posts) => posts.map(processBlogPost),
+  );
+};
+
+export const useBlogPostBySlug = (
+  slug: string,
+  params: Strapi4RequestParams = {},
+) => {
+  return useFind(
+    "blogs",
+    merge(
+      {
+        filters: {
+          slug: { $eq: slug },
+        },
+        populate: ["localizations", "thumbnail", "backgroundImage"],
+      },
+      params,
+    ),
+    (posts) => posts.map(processBlogPost),
+  ).then((res) => {
+    res.data.value = res.data.value?.[0];
+    return res;
+  });
 };
 
 // Strapi request wrapper
@@ -274,6 +319,12 @@ export const processPage = (result) => {
   return result;
 };
 
+export const processBlogPost = (result) => {
+  result = processLocalizations(result);
+  result = proccessMarkdown(result);
+  return result;
+};
+
 // Sorting
 
 export function sortEvents(a: any, b: any) {
@@ -312,6 +363,12 @@ const processEvent = (event) => {
   event = processLocalizations(event);
   event = proccessMarkdown(event);
   event = processEventVideostreams(event);
+  return event;
+};
+
+const processAnthropologies = (event) => {
+  event = processLocalizations(event);
+  event = proccessMarkdown(event);
   return event;
 };
 

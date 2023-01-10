@@ -30,6 +30,7 @@
     font-size: var(--text-sm);
     background-color: var(--bg);
     transform: none;
+    z-index: 10;
   }
 
   .breadcrumbItem {

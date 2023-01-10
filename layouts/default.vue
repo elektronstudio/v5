@@ -1,7 +1,11 @@
 <template>
   <main
     class="main"
-    :class="{ indexPage: $route.fullPath === '/', isLive: isLive }"
+    :class="{
+      indexPage: $route.fullPath === '/',
+      isLive: isLive,
+      breadCumbs: breadcrumbs.length > 0,
+    }"
   >
     <Nav />
     <Breadcrumbs />
@@ -22,13 +26,13 @@
   padding-top: var(--h-9);
 }
 
-.main.isLive {
-  padding-top: calc(var(--h-9) * 2);
+@media only screen and (max-width: 599px) {
+  .main.isLive {
+    padding-top: calc(var(--h-9) * 2);
+  }
 }
-
 @media only screen and (min-width: 600px) {
-  .main.isLive,
-  .main {
+  .main.breadCumbs {
     padding-top: calc(var(--h-9) + var(--h-6));
   }
 }

@@ -9,8 +9,9 @@ const { images } = defineProps<Props>();
 
 <template>
   <section class="ImageSlider">
-    <figure v-for="image in images">
-      <EImage :media="image" />
+    <figure v-for="media in images">
+      <EImage :media="media" v-if="media.mime.startsWith('image/')" />
+      <EVideo :media="media" v-else-if="media.mime.startsWith('video/')" />
     </figure>
   </section>
 </template>
@@ -38,18 +39,22 @@ const { images } = defineProps<Props>();
   margin-top: var(--m-4);
 }
 
-.ImageSlider .EImage {
+.ImageSlider .EImage,
+.ImageSlider .EVideo {
   height: 70vw;
   width: auto;
   border-radius: var(--rounded-4xl);
+  overflow: hidden;
 }
 @media only screen and (min-width: 600px) {
-  .ImageSlider .EImage {
+  .ImageSlider .EImage,
+  .ImageSlider .EVideo {
     height: 40vw;
   }
 }
 @media only screen and (min-width: 1000px) {
-  .ImageSlider .EImage {
+  .ImageSlider .EImage,
+  .ImageSlider .EVideo {
     height: 30vw;
   }
 }
